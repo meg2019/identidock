@@ -1,8 +1,7 @@
 identidock:
   build: .
-  ports:
-    - "9090:9090"
-    - "9191:9191"
+  expose:
+    - "9090"
   volumes:
     - ./app:/app
   links:
