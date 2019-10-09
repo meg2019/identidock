@@ -1,12 +1,12 @@
 import unittest
-import identidock
+import identidockII
 
 
 class TestCase(unittest.TestCase):
 
     def setUp(self):
         identidock.app.config["TESTING"] = True
-        self.app = identidock.app.test_client()
+        self.app = identidockII.app.test_client()
 
     def test_get_mainpage(self):
         page = self.app.post("/", data=dict(name="Moby Dock"))
