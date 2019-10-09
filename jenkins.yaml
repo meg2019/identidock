@@ -1,9 +1,7 @@
 identidock:
   build: .
   expose:
-    - "9090"
-  volumes:
-    - ./app:/app
+    - "9090" 
   links:
     - dnmonster
     - redis
