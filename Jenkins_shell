@@ -17,8 +17,17 @@ ERR=$?
 if [ $ERR -eq 0 ]; then
   IP=$(sudo docker inspect -f {{.NetworkSettings.IPAddress}} jenkins_identidock_1)
   CODE=$(curl -sL -w "%{http_code}" $IP:9090/monster/bla -o /dev/null) || true
-  if [ $CODE -ne 200 ]; then
-  	echo "Site returned " $CODE
+  if [ $CODE -eq 200 ]; then
+  	echo "Test passed - Tagging"
+    HASH=$(git rev-parse --short HEAD)
+    sudo docker tag jenkins_identidock qaserfde/identidock:$HASH
+    sudo docker tag jenkins_identidock qaserfde/identidock:newest
+    echo "Pushing"
+    sudo docker login -u qaserfde -p PJ5kvY5EjwBwB8qECuTE
+    sudo docker push qaserfde/identidock:$HASH
+    sudo docker push qaserfde/identidock:newest
+  else
+    echo "Site returned " $CODE
     ERR=1
   fi
 fi
